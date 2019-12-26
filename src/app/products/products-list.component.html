@@ -20,9 +20,9 @@
                     <img src="" alt="">
                 </td>
                 <td>{{p.productName}}</td>
-                <td>{{p.serialNumber | uppercase | convertToSpaces : '-'}}</td>
+                <td>{{p.productCode | uppercase | convertToSpaces : '-'}}</td>
                 <td>{{p.releaseDate}}</td>
-                <td> <pm-star [rating]='p.rating' (notify)='onNotify($event)'></pm-star> </td>
+                <td> <pm-star [rating]='p.starRating' (notify)='onNotify($event)'></pm-star> </td>
             </tr>
         </tbody>
     </table>

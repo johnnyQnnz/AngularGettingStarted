@@ -1,7 +1,6 @@
 import { IProduct } from './product';
 import { Component, OnInit } from '@angular/core';
-import { filter } from 'minimatch';
-import { IPerfLoggingPrefs } from 'selenium-webdriver/chrome';
+import { ProductService } from './products.service';
 
 @Component({
     selector: 'pm-products',
@@ -10,8 +9,9 @@ import { IPerfLoggingPrefs } from 'selenium-webdriver/chrome';
 export class ProductsListComponent implements OnInit {
     pageTitle: string = 'Product List';
     showImage: boolean = false;
-
+    errorMessage: string;
     _listFilter: string;
+
     get listFilter(): string {
         return this._listFilter;
     }
@@ -21,34 +21,8 @@ export class ProductsListComponent implements OnInit {
     }
 
     filteredProducts: IProduct[];
-    products: IProduct[] = [
-        {
-            productId: 1,
-            productName: 'hammer ACME',
-            releaseDate: 'some date',
-            serialNumber: 'dfgd-1233',
-            rating: 4.3
-        },
-        {
-            productId: 2,
-            productName: 'saw ACME',
-            releaseDate: 'some date',
-            serialNumber: 'sdfh-2342',
-            rating: 2.6
-        },
-        {
-            productId: 3,
-            productName: 'bucket ACME',
-            releaseDate: 'some date',
-            serialNumber: 'prot-2343',
-            rating: 3.4
-        }
-    ]
-
-    constructor() {
-        this.filteredProducts = this.products;
-        this.listFilter = '';
-
+    products: IProduct[] = []
+    constructor(private productService: ProductService) {
     }
     toggleImage() {
         this.showImage = !this.showImage;
@@ -62,6 +36,12 @@ export class ProductsListComponent implements OnInit {
         console.log(message);
     }
     ngOnInit(): void {
-        console.log('Running OnInit');
+        this.productService.getProductsFromUrl().subscribe({
+            next: products => {
+                this.products = products;
+                this.filteredProducts = this.products;
+            },
+            error: err => this.errorMessage = err
+        });
     }
 }
