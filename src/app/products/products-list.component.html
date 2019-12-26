@@ -1,0 +1,29 @@
+<div class="pm-product-list-container">
+    <div>
+        <input type="text" [(ngModel)]="listFilter">
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <button>Show Image</button>
+                </th>
+                <th>Name</th>
+                <th>Serial number</th>
+                <th>Release Date</th>
+                <th>Rating <i class="fa fa-star"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let p of filteredProducts">
+                <td>
+                    <img src="" alt="">
+                </td>
+                <td>{{p.productName}}</td>
+                <td>{{p.serialNumber | uppercase | convertToSpaces : '-'}}</td>
+                <td>{{p.releaseDate}}</td>
+                <td> <pm-star [rating]='p.rating' (notify)='onNotify($event)'></pm-star> </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

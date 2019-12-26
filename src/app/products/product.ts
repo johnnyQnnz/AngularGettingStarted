@@ -1,5 +1,7 @@
 export interface IProduct {
     productId: number;
     productName: string;
-    releaseDate: Date;
+    releaseDate: string;
+    serialNumber: string;
+    rating: number;
 }
